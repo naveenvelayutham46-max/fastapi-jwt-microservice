@@ -1,0 +1,163 @@
+{
+  "info": {
+    "_postman_id": "f4c42d5a-9b9a-4c72-ae55-fastapi-jwt-demo",
+    "name": "FastAPI JWT Microservice",
+    "description": "Registration, JWT login and protected CRUD requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "item_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"prem\",\n  \"email\": \"prem@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+        },
+        "url": "{{base_url}}/auth/register"
+      }
+    },
+    {
+      "name": "2. Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "prem",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "StrongPass123",
+              "type": "text"
+            }
+          ]
+        },
+        "url": "{{base_url}}/auth/login"
+      }
+    },
+    {
+      "name": "3. Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/auth/me"
+      }
+    },
+    {
+      "name": "4. Create Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Laptop\",\n  \"description\": \"My protected item\"\n}"
+        },
+        "url": "{{base_url}}/items/"
+      }
+    },
+    {
+      "name": "5. List Items",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/items/"
+      }
+    },
+    {
+      "name": "6. Get Item",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/items/{{item_id}}"
+      }
+    },
+    {
+      "name": "7. Update Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Laptop\",\n  \"description\": \"Updated protected item\"\n}"
+        },
+        "url": "{{base_url}}/items/{{item_id}}"
+      }
+    },
+    {
+      "name": "8. Delete Item",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/items/{{item_id}}"
+      }
+    }
+  ]
+}
